@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Visitor Management</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p>Visitor Management Analytics</p>
+            </div>
+            <div class="header-actions">
+                <button class="refresh-btn" onclick="Dashboard.loadData()">🔄 Refresh</button>
+                <a href="index.html" class="nav-btn">👥 Visitor App</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="totalVisitors">-</div>
+                <div class="stat-label">Total Visitors</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalParkingPermits">-</div>
+                <div class="stat-label">Parking Permits</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="todayVisitors">-</div>
+                <div class="stat-label">Today's Visitors</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="thisWeekVisitors">-</div>
+                <div class="stat-label">This Week</div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-grid">
+            <div class="chart-container">
+                <h2 class="chart-title">📊 Visitor Trends (Last 7 Days)</h2>
+                <canvas id="visitorChart" class="chart-canvas"></canvas>
+            </div>
+
+            <div class="chart-container">
+                <h2 class="chart-title">🚗 Entry Types Distribution</h2>
+                <canvas id="pieChart" class="chart-canvas"></canvas>
+            </div>
+        </div>
+
+        <!-- Data Management -->
+        <div class="data-table">
+            <div class="table-header">
+                <h2>📋 Recent Entries</h2>
+                <div class="export-buttons">
+                    <button class="export-btn" onclick="Dashboard.exportData('visitors')">📥 Export Visitors</button>
+                    <button class="export-btn parking" onclick="Dashboard.exportData('parking')">📥 Export Parking</button>
+                </div>
+            </div>
+            
+            <div class="search-filter">
+                <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search entries...">
+                <select class="filter-select" id="typeFilter">
+                    <option value="all">All Types</option>
+                    <option value="visitor">Visitors</option>
+                    <option value="parking">Parking</option>
+                </select>
+                <select class="filter-select" id="dateFilter">
+                    <option value="all">All Time</option>
+                    <option value="today">Today</option>
+                    <option value="week">This Week</option>
+                    <option value="month">This Month</option>
+                </select>
+            </div>
+
+            <div id="tableContainer">
+                <div class="loading">Loading data...</div>
+            </div>
+        </div>
+    </div>
+
+   
+    <script src="../js/app.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html>
