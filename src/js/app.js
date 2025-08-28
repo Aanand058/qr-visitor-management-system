@@ -1,8 +1,22 @@
 // src/js/app.js
 const App = {
+<<<<<<< HEAD
     WEB_APP_URL: "https://script.google.com/macros/s/AKfycbx5tFtVOTZw7-bvR6QS8VzZPO4iSz402UlzLnJzlXFV9-TAm5ubLBlOWZwe_SiQriL33Q/exec", // Replace with your Apps Script URL
+=======
+    WEB_APP_URL: window.WEB_APP_URL || '', // Fallback to local API endpoint
+   
+>>>>>>> 13d1371 (worked on .env setup and server)
 
-    init() { this.setupForms(); },
+    init() { 
+        this.setupForms(); 
+        this.checkConfiguration();
+    },
+
+    checkConfiguration() {
+        if (!window.WEB_APP_URL) {
+            console.warn('WEB_APP_URL not configured, using local API endpoint');
+        }
+    },
 
     setupForms() {
         const visitorForm = document.getElementById("visitorForm");
@@ -29,17 +43,27 @@ const App = {
         formData.forEach((value, key) => data[key] = key === "licensePlate" ? value.toUpperCase() : value);
 
         try {
-            const response = await fetch(this.WEB_APP_URL, {
+            // Use local API endpoint for better error handling and validation
+            const response = await fetch('/api/submit', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(data)
             });
+            
             const result = await response.json();
-            this.showMessage(result.message, result.success ? "success" : "error");
-            if (result.success) form.reset();
+            
+            if (result.success) {
+                this.showMessage(result.message || 'Form submitted successfully!', 'success');
+                form.reset();
+                if (typeof showConfirmation === 'function') {
+                    showConfirmation('Form submitted successfully!');
+                }
+            } else {
+                this.showMessage(result.message || 'Error submitting form!', 'error');
+            }
         } catch (err) {
-            console.error(err);
-            this.showMessage("Error submitting form!", "error");
+            console.error('Error submitting form:', err);
+            this.showMessage("Network error! Please try again.", "error");
         }
     },
 
@@ -57,9 +81,7 @@ const App = {
     }
 };
 
-// document.addEventListener("DOMContentLoaded", () => App.init());
-
-//Diaglog Box
+// Dialog Box functionality
 function showConfirmation(message = 'Form submitted successfully!') {
     const dialog = document.getElementById('confirmationDialog');
     const dialogMsg = document.getElementById('dialogMessage');
@@ -73,13 +95,14 @@ function showConfirmation(message = 'Form submitted successfully!') {
             dialog.style.display = 'none';
         };
 
-        // Optionally auto-close after 3 seconds
+        // Auto-close after 3 seconds
         setTimeout(() => { dialog.style.display = 'none'; }, 3000);
     }
 }
 
-
+// Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+<<<<<<< HEAD
 
     // Visitor form
     const visitorForm = document.getElementById('visitorForm');
@@ -155,4 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   
   });
+=======
+    App.init();
+});
+>>>>>>> 13d1371 (worked on .env setup and server)
   
