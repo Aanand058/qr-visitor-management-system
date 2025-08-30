@@ -42,6 +42,10 @@ const App = {
         let data = { type, visitDate: now.toLocaleDateString(), visitTime: now.toLocaleTimeString() };
         formData.forEach((value, key) => data[key] = key === "licensePlate" ? value.toUpperCase() : value);
 
+        // Show loading state immediately
+        this.showMessage("⏳ Submitting, please wait...", "loading");
+
+
         try {
             // Use local API endpoint for better error handling and validation
             const response = await fetch('/api/submit', {
@@ -55,9 +59,7 @@ const App = {
             if (result.success) {
                 this.showMessage(result.message || 'Form submitted successfully!', 'success');
                 form.reset();
-                if (typeof showConfirmation === 'function') {
-                    showConfirmation('Form submitted successfully!');
-                }
+                
             } else {
                 this.showMessage(result.message || 'Error submitting form!', 'error');
             }
@@ -70,35 +72,25 @@ const App = {
     showMessage(message, type = "success") {
         this.clearMessages();
         const msgDiv = document.createElement("div");
-        msgDiv.className = type === "success" ? "success-message" : "error-message";
+
+        if (type === "success") {
+            msgDiv.className = "success-message";
+        } else if (type === "error") {
+            msgDiv.className = "error-message";
+        } else {
+            msgDiv.className = "loading-message"; // New class for loading
+        }
+
         msgDiv.textContent = message;
         const container = document.querySelector(".message-container");
         if (container) container.appendChild(msgDiv);
     },
 
     clearMessages() {
-        document.querySelectorAll(".success-message, .error-message").forEach(msg => msg.remove());
+        document.querySelectorAll(".success-message, .error-message, .loading-message").forEach(msg => msg.remove());
     }
 };
 
-// Dialog Box functionality
-function showConfirmation(message = 'Form submitted successfully!') {
-    const dialog = document.getElementById('confirmationDialog');
-    const dialogMsg = document.getElementById('dialogMessage');
-    const closeBtn = document.getElementById('closeDialog');
-
-    if(dialog && dialogMsg && closeBtn) {
-        dialogMsg.textContent = message;
-        dialog.style.display = 'flex';
-
-        closeBtn.onclick = () => {
-            dialog.style.display = 'none';
-        };
-
-        // Auto-close after 3 seconds
-        setTimeout(() => { dialog.style.display = 'none'; }, 3000);
-    }
-}
 
 // Initialize app when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {

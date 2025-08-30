@@ -206,3 +206,13 @@
 .form-group select:focus:hover {
     background: white;
 }
+
+
+.loading-message {
+    color: #444;
+    font-weight: 500;
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 6px;
+    display: inline-block;
+}
