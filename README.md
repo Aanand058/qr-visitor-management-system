@@ -1,165 +1,149 @@
 # QR Visitor Management System
 
-A comprehensive, modern web application for managing visitor entries and parking permits using QR codes and Google Sheets integration.
+A modern web application for managing visitor entries and parking permits using QR codes and Google Sheets integration.
+
+---
 
 ## 🚀 Features
 
-- **Visitor Registration**: Streamlined visitor entry forms with real-time validation
-- **Parking Permit Management**: Complete vehicle registration system with 1-hour parking limit
-- **QR Code Integration**: Generate QR codes for easy access and tracking
-- **Google Sheets Integration**: Automatic data storage and management
-- **Responsive Design**: Mobile-friendly interface with modern UI/UX
-- **Real-time Validation**: Form validation and error handling
-- **Security Features**: Rate limiting, CORS protection, and security headers
-- **Admin Dashboard**: Comprehensive data management and analytics
+- **Visitor Registration:** Simple and secure visitor entry forms with real-time validation
+- **Parking Permit Management:** Vehicle registration system with 1-hour parking limit
+- **QR Code Integration:** Generate QR codes for tracking and access
+- **Google Sheets Integration:** Automatic data storage and retrieval
+- **Responsive Design:** Works across all modern devices
+- **Admin Dashboard:** View, manage, and analyze all data
+- **Security:** Rate limiting, CORS protection, secure headers
 
-## 🏗️ Architecture
+---
 
-```
+## 🏗️ Project Structure
+
+```text
 qr-visitor-management-system/
 ├── src/
 │   ├── pages/           # HTML pages (index, visitor, parking, admin)
-│   ├── css/             # Stylesheets (main, forms, dialog, dashboard)
-│   ├── js/              # Frontend JavaScript (app, dashboard, dialog)
+│   ├── css/             # Stylesheets
+│   ├── js/              # Frontend JS
 │   └── backend/         # Google Apps Script integration
 ├── scripts/             # Setup and utility scripts
-├── server.js            # Express.js server
-├── package.json         # Dependencies and scripts
-└── README.md           # This file
+├── server.js            # Express.js backend
+├── package.json         # Dependencies
+└── README.md            # Project documentation
 ```
+
+---
 
 ## 🛠️ Technology Stack
 
-- **Backend**: Node.js, Express.js
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Database**: Google Sheets (via Google Apps Script)
-- **Security**: Helmet, CORS, Rate Limiting
-- **Development**: Nodemon, Browser-sync, ESLint, Prettier
+- **Backend:** Node.js, Express.js
+- **Frontend:** HTML, CSS, JavaScript
+- **Database:** Google Sheets (via Apps Script)
+- **Security:** Helmet.js, CORS, Rate Limiting
+- **Dev Tools:** Nodemon, Browser-sync, ESLint, Prettier
+
+---
 
 ## 📋 Prerequisites
 
-- Node.js >= 16.0.0
-- npm >= 8.0.0
-- Google account (for Google Sheets integration)
+- Node.js >= 16.x
+- npm >= 8.x
+- Google account (for Sheets integration)
 - Modern web browser
 
-## 🚀 Quick Start
+---
 
-### 1. Clone the Repository
-```bash
-git clone https://github.com/yourusername/qr-visitor-management-system.git
-cd qr-visitor-management-system
-```
+## 🚦 Quick Start
 
-### 2. Install Dependencies
-```bash
-npm install
-```
+1. **Clone the repository**
+    ```bash
+    git clone https://github.com/Aanand058/qr-visitor-management-system.git
+    cd qr-visitor-management-system
+    ```
 
-### 3. Environment Setup
-```bash
-npm run setup
-```
-This will create a `.env` file and necessary directories.
+2. **Install dependencies**
+    ```bash
+    npm install
+    ```
 
-### 4. Configure Google Apps Script
-1. Go to [Google Apps Script](https://script.google.com)
-2. Create a new project
-3. Copy the code from `src/backend/google-apps-script.js`
-4. Deploy as a web app
-5. Update `GOOGLE_SCRIPT_URL` in your `.env` file
+3. **Run setup script**
+    ```bash
+    npm run setup
+    ```
+    This will create a `.env` file and required directories.
 
-### 5. Start the Application
-```bash
-npm start
-```
+4. **Configure Google Apps Script**
+    - Create a new Apps Script project.
+    - Copy code from `src/backend/google-apps-script.js`.
+    - Deploy as a web app.
+    - Update `GOOGLE_SCRIPT_URL` in `.env`.
 
-The application will be available at `http://localhost:3000`
+5. **Start the application**
+    ```bash
+    npm start
+    ```
+    Runs at `http://localhost:3000`.
+
+---
 
 ## 🔧 Configuration
 
-### Environment Variables
-Create a `.env` file in the root directory:
+- Create a `.env` file with the following:
+    ```env
+    PORT=3000
+    NODE_ENV=development
 
-```env
-# Server Configuration
-PORT=3000
-NODE_ENV=development
+    GOOGLE_SCRIPT_URL=YOUR_GOOGLE_APPS_SCRIPT_URL_HERE
 
-# Google Apps Script Configuration
-GOOGLE_SCRIPT_URL=YOUR_GOOGLE_APPS_SCRIPT_URL_HERE
+    VISITORS_SHEET_ID=YOUR_VISITORS_SHEET_ID_HERE
+    PARKING_SHEET_ID=YOUR_PARKING_SHEET_ID_HERE
 
-# Google Sheets IDs
-VISITORS_SHEET_ID=YOUR_VISITORS_SHEET_ID_HERE
-PARKING_SHEET_ID=YOUR_PARKING_SHEET_ID_HERE
+    SESSION_SECRET=your_session_secret_here
+    ADMIN_USERNAME=admin
+    ADMIN_PASSWORD=your_secure_password_here
+    ```
 
-# Security Configuration
-SESSION_SECRET=your_session_secret_here
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=your_secure_password_here
-```
+---
 
-### Google Sheets Setup
-1. Create two Google Sheets:
-   - **Visitors Sheet**: For visitor registration data
-   - **Parking Sheet**: For parking permit data
-2. Update the sheet IDs in your `.env` file
-3. Run the setup function in Google Apps Script
-
-## 📱 Usage
+## 📑 Usage
 
 ### Visitor Registration
-1. Navigate to the main page
-2. Click "Visitor Entry"
-3. Fill in the required fields:
-   - Visitor Name
-   - Resident Name
-   - Unit Number
-   - Phone Number
-4. Submit the form
+- Go to the main page > Visitor Entry.
+- Fill out all required fields and submit.
 
 ### Parking Permit
-1. Navigate to the main page
-2. Click "Parking Permit"
-3. Fill in the required fields:
-   - Visitor Name
-   - Resident Name
-   - Unit Number
-   - Vehicle Details (Make, Model, Color, License Plate)
-4. Submit the form
+- Go to the main page > Parking Permit.
+- Fill out visitor and vehicle details (Make, Model, Color, License Plate).
+- **Note:** Parking is limited to 1 hour.
 
-**Note**: Parking is limited to 1 hour only. Overnight parking is not permitted.
+---
 
 ## 🔌 API Endpoints
 
-### Core Endpoints
-- `GET /` - Main application page
-- `GET /visitor` - Visitor registration page
-- `GET /parking` - Parking permit page
-- `GET /admin` - Admin dashboard
-- `GET /health` - Health check endpoint
+| Method | Endpoint        | Description                   |
+|--------|----------------|-------------------------------|
+| GET    | /              | Main application page         |
+| GET    | /visitor       | Visitor registration page     |
+| GET    | /parking       | Parking permit page           |
+| GET    | /admin         | Admin dashboard               |
+| GET    | /health        | Health check                  |
+| POST   | /api/submit    | Submit visitor/parking data   |
+| GET    | /api/visitors  | Retrieve visitor data         |
+| GET    | /api/parking   | Retrieve parking data         |
 
-### API Endpoints
-- `POST /api/submit` - Submit visitor or parking data
-- `GET /api/visitors` - Retrieve visitor data
-- `GET /api/parking` - Retrieve parking data
+---
 
-## 🎨 Customization
+## 🖌️ Customization
 
-### Styling
-- Modify `src/css/main.css` for global styles
-- Update `src/css/forms.css` for form-specific styling
-- Customize `src/css/dialog.css` for modal dialogs
-- Adjust `src/css/dashboard.css` for admin interface
+- Styles: `src/css/` (main, forms, dialog, dashboard)
+- Frontend logic: `src/js/app.js`
+- Backend: `server.js`
+- Google Apps Script: `src/backend/google-apps-script.js`
 
-### Functionality
-- Edit `src/js/app.js` for frontend logic
-- Modify `server.js` for backend functionality
-- Update Google Apps Script for data processing
+---
 
 ## 📊 Data Structure
 
-### Visitor Entry
+**Visitor Entry**
 ```json
 {
   "type": "Visitor",
@@ -172,7 +156,7 @@ ADMIN_PASSWORD=your_secure_password_here
 }
 ```
 
-### Parking Permit
+**Parking Permit**
 ```json
 {
   "type": "Parking",
@@ -188,83 +172,80 @@ ADMIN_PASSWORD=your_secure_password_here
 }
 ```
 
+---
+
 ## 🚀 Deployment
 
-### Development Mode
-```bash
-npm run dev
-```
+- **Development Mode**
+    ```bash
+    npm run dev
+    ```
+- **Production Mode**
+    ```bash
+    npm start
+    ```
+- **Generate QR Codes**
+    ```bash
+    npm run generate-qr -- --url https://yourdomain.com
+    ```
 
-### Production Mode
-```bash
-npm start
-```
-
-### Generate QR Codes
-```bash
-npm run generate-qr -- --url https://yourdomain.com
-```
+---
 
 ## 🔒 Security Features
 
-- **Rate Limiting**: Prevents abuse and DDoS attacks
-- **CORS Protection**: Configurable cross-origin resource sharing
-- **Security Headers**: Helmet.js for security headers
-- **Input Validation**: Server-side and client-side validation
-- **Environment Variables**: Secure configuration management
+- Rate limiting and abuse prevention
+- CORS protection and secure headers
+- Input validation (client & server)
+- Secure environment variable management
+
+---
 
 ## 📝 Scripts
 
-- `npm start` - Start the production server
-- `npm run dev` - Start development server with auto-reload
-- `npm run setup` - Run initial setup and configuration
-- `npm run generate-qr` - Generate QR codes for deployment
-- `npm run setup-google-sheets` - Configure Google Sheets integration
+- `npm start` - Start production server
+- `npm run dev` - Start dev server with auto-reload
+- `npm run setup` - Initial setup
+- `npm run generate-qr` - QR code generation
+- `npm run setup-google-sheets` - Sheets integration
+
+---
 
 ## 🐛 Troubleshooting
 
-### Common Issues
+- **Port In Use:** Change port in `.env` or kill process:  
+  ```bash
+  lsof -ti:3000 | xargs kill -9
+  ```
+- **Apps Script Errors:** Check URL, permissions & logs
+- **Form Issues:** Check browser console & server logs
 
-1. **Port Already in Use**
-   ```bash
-   # Change port in .env file or kill existing process
-   lsof -ti:3000 | xargs kill -9
-   ```
+Health check: `http://localhost:3000/health`
 
-2. **Google Apps Script Errors**
-   - Verify the script URL is correct
-   - Check Google Apps Script logs
-   - Ensure proper deployment permissions
-
-3. **Form Submission Issues**
-   - Check browser console for errors
-   - Verify network connectivity
-   - Check server logs
-
-### Health Check
-Visit `http://localhost:3000/health` to verify server status.
+---
 
 ## 🤝 Contributing
 
-1. Fork the repository
+1. Fork this repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+4. Push to your branch (`git push origin feature/amazing-feature`)
+5. Open a pull request
 
+---
 
 ## 🙏 Acknowledgments
 
-- Express.js community for the robust web framework
-- Google Apps Script for seamless integration
-- Modern CSS and JavaScript standards for responsive design
+- Express.js community
+- Google Apps Script
+- Modern CSS & JavaScript standards
+
+---
 
 ## 📞 Support
 
-For support and questions:
-- Create an issue in the GitHub repository
-- Check the [SETUP.md](SETUP.md) file for detailed setup instructions
-- Review the console logs and server output
+- Create an issue in this repo
+- See [SETUP.md](SETUP.md) for more setup details
+- Review console logs and server output
 
 ---
 
