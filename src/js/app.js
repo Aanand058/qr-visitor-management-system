@@ -78,7 +78,7 @@ const App = {
         } else if (type === "error") {
             msgDiv.className = "error-message";
         } else {
-            msgDiv.className = "loading-message"; // New class for loading
+            msgDiv.className = "loading-message"; 
         }
 
         msgDiv.textContent = message;
