@@ -1,0 +1,44 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Replace Environment Variables
+        run: |
+          # Replace placeholders in JavaScript files
+          sed -i 's|{{API_ENDPOINT}}|${{ secrets.API_ENDPOINT }}|g' js/config.js
+          sed -i 's|{{WEB_APP_URL}}|${{ secrets.WEB_APP_URL }}|g' js/config.js
+          
+          # Or create config.js dynamically
+          echo "window.WEB_APP_URL = '${{ secrets.WEB_APP_URL }}';" > js/config.js
+          echo "window.API_ENDPOINT = '${{ secrets.API_ENDPOINT }}';" >> js/config.js
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
