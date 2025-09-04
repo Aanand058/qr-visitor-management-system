@@ -53,11 +53,8 @@ app.use(
   })
 );
 
-// Serve config.js dynamically to the browser
-app.get('/js/config.js', (req, res) => {
-  res.type('application/javascript');
-  res.send(`window.WEB_APP_URL = "${process.env.GOOGLE_SCRIPT_URL || ''}";`);
-});
+
+
 
 // Serve static files
 app.use(express.static(path.join(__dirname, 'src')));
