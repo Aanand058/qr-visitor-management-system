@@ -63,7 +63,9 @@ app.use(express.static(path.join(__dirname, 'src/pages')));
 // Pages
 app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'src/pages/index.html')));
 app.get('/visitor', (req, res) => res.sendFile(path.join(__dirname, 'src/pages/visitor.html')));
+app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'src/pages/admin.html')));
 app.get('/parking', (req, res) => res.sendFile(path.join(__dirname, 'src/pages/parking.html')));
+app.get('/dashboard', (req, res) => res.sendFile(path.join(__dirname, 'src/pages/dashboard.html')));
 
 // Health check with environment info
 app.get('/health', (req, res) => res.json({ 
@@ -76,6 +78,7 @@ app.get('/health', (req, res) => res.json({
 
 // Proxy endpoint
 app.post('/api/submit', async (req, res) => {
+  
   try {
     if (!process.env.GOOGLE_SCRIPT_URL) {
       return res.status(500).json({ 
@@ -106,6 +109,34 @@ app.post('/api/submit', async (req, res) => {
   }
 });
 
+
+app.get("/api/get-stats", async (req, res) => {
+  const url = process.env.GOOGLE_SCRIPT_URL_V3 + "?action=getStats";
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+app.get("/api/get-recent", async (req, res) => {
+  const url = process.env.GOOGLE_SCRIPT_URL_V3 + "?action=getRecent";
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+
+
+
+
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
@@ -122,6 +153,17 @@ app.use((req, res) => {
     message: 'Route not found' 
   });
 });
+
+
+
+
+
+
+
+
+
+
+
 
 // Start server
 app.listen(PORT, () => {
